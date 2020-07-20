@@ -1,0 +1,26 @@
+version: '3.2'
+services:
+        db:
+          image: postgres:latest
+          container_name: postgres
+          restart: always
+          ports:
+           - 5432:5432
+          environment:
+              POSTGRES_USER: 'postgres' # DB USER
+              POSTGRES_PASSWORD: 'postgres' # DB password
+          volumes:
+           - ./init_db:/docker-entrypoint-initdb.d
+
+        java:
+           image: openjdk:8
+           container_name: springboot
+           restart: always
+           ports:
+                   - 8080:8080 #ホストからデバッグできるようにポートフォワード
+           environment:
+                   http_proxy: http://dng-proxy-o.denso.co.jp:8080
+                   https_proxy: http://dng-proxy-o.denso.co.jp:8080
+           tty: true
+           depends_on:
+             - db
