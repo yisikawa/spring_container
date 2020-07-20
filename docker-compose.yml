@@ -12,9 +12,9 @@ services:
           volumes:
            - ./init_db:/docker-entrypoint-initdb.d
 
-        java:
-           image: openjdk:8
-           container_name: springboot
+        spring:
+           image: spring_demo
+           container_name: geko_image
            restart: always
            ports:
                    - 8080:8080 #ホストからデバッグできるようにポートフォワード
